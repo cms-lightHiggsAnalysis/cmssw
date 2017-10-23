@@ -358,6 +358,7 @@ def miniAOD_customizeCommon(process):
     #-- Adding boosted taus
     from RecoTauTag.Configuration.boostedHPSPFTaus_cfi import addBoostedTaus
     addBoostedTaus(process)
+
     process.load("RecoTauTag.Configuration.RecoPFTauTag_cff")
     process.load("RecoTauTag.Configuration.HPSPFTaus_cff")
     #-- Adding customization for 94X 2017 legacy reMniAOD
@@ -373,6 +374,12 @@ def miniAOD_customizeCommon(process):
     _makePatTausTaskWithTauReReco.add(process.PFTauTask)
     run2_miniAOD_80XLegacy.toReplaceWith(
         process.makePatTausTask, _makePatTausTaskWithTauReReco)
+
+    #---------------------------------------------------------------------------
+    #Adding muon cleaned taus
+    from RecoTauTag.Configuration.muonCleanedHPSPFTaus_cfi import addMuonCleanedTaus
+    addMuonCleanedTaus(process)
+    #---------------------------------------------------------------------------
 
     # Adding puppi jets
     if not hasattr(process, 'ak4PFJetsPuppi'): #MM: avoid confilct with substructure call
