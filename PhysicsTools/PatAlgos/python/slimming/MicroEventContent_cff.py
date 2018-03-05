@@ -9,8 +9,10 @@ MicroEventContent = cms.PSet(
         'keep *_slimmedMuons_*_*',
         'keep *_slimmedTaus_*_*',
         'keep *_slimmedTausBoosted_*_*',
+
         'keep *_slimmedCaloJets_*_*',
         'keep *_slimmedTausMuonCleaned_*_*',
+        'keep *_slimmedTausElectronCleaned_*_*',
         'keep *_slimmedJets_*_*',
         # drop content created by MINIAOD DeepFlavour production
         'drop recoBaseTagInfosOwned_slimmedJets_*_*',
