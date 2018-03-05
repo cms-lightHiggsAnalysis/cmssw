@@ -376,9 +376,9 @@ def miniAOD_customizeCommon(process):
         process.makePatTausTask, _makePatTausTaskWithTauReReco)
 
     #---------------------------------------------------------------------------
-    #Adding muon cleaned taus
-    from RecoTauTag.Configuration.muonCleanedHPSPFTaus_cfi import addMuonCleanedTaus
-    addMuonCleanedTaus(process)
+    #Adding electron cleaned taus
+    from RecoTauTag.Configuration.electronCleanedHPSPFTaus_cfi import addElectronCleanedTaus
+    addElectronCleanedTaus(process)
     #---------------------------------------------------------------------------
 
     # Adding puppi jets
