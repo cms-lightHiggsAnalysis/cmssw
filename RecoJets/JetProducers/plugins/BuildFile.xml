@@ -15,4 +15,9 @@
   <use   name="JetMETCorrections/Objects"/>
   <use   name="fastjet"/>
   <use   name="fastjet-contrib"/>
+  <use   name="RecoEgamma/EgammaElectronAlgos"/>
+  <use name="RecoEgamma/EgammaIsolationAlgos"/>
+  <use name="RecoEgamma/EgammaTools" />
+  <use name="RecoEgamma/ElectronIdentification" />
+  <use name="DataFormats/EgammaCandidates"/>
 </library>
