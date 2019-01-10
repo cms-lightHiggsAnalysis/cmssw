@@ -102,7 +102,7 @@
   <class name="edm::reftobase::BaseHolder<reco::Jet>" />
   <class name="edm::reftobase::IndirectHolder<reco::Jet>" />
   <class name="edm::reftobase::IndirectVectorHolder<reco::Jet>" />
-  <class name="edm::reftobase::Holder<reco::Candidate,edm::RefToBase<reco::Jet> >"/>
+  <class name="edm::reftobase::Holder<reco::Candidate,edm::RefToBase<reco::Jet> > "/>
   <class name="edm::RefToBaseVector<reco::Jet>"/>
   <class name="edm::Wrapper<edm::RefToBaseVector<reco::Jet> >"/>
   <class name="edm::reftobase::BaseVectorHolder<reco::Jet>"/>
@@ -118,4 +118,8 @@
   <class name="edm::reftobase::RefHolder<reco::PFClusterJetRef>" />
   <class name="edm::reftobase::Holder<reco::Jet, reco::JPTJetRef>" />
   <class name="edm::reftobase::RefHolder<reco::JPTJetRef>" />
+
+   <!--RPY 7-Dec-15-->
+   <class name="edm::Wrapper<edm::ValueMap<reco::PFJetRef> >"/>
+   <class name="edm::ValueMap<reco::PFJetRef>"/>
 </lcgdict>

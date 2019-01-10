@@ -38,6 +38,12 @@ namespace DataFormats_HepMCCandidate {
     edm::Wrapper<edm::ValueMap<reco::FlavorHistoryEvent> > wvmfhe1;
     std::vector<reco::GenParticleRef>	v_gpr;
     edm::RefVectorIterator<std::vector<reco::GenParticle>,reco::GenParticle,edm::refhelper::FindUsingAdvance<std::vector<reco::GenParticle>,reco::GenParticle> > rvigp;
+
+    //RPY 28-Aug-12
+    edm::reftobase::BaseVectorHolder<reco::GenParticle> *bvh;
+    edm::reftobase::IndirectVectorHolder<reco::GenParticle> ivh;
+    edm::RefToBaseVector<reco::GenParticle> rtbv;
+    edm::Wrapper<edm::RefToBaseVector<reco::GenParticle> > wrtbv;
   };
 }
 
