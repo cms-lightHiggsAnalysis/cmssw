@@ -38,6 +38,9 @@
 #include "DataFormats/Common/interface/PtrVector.h"
 #include "DataFormats/Common/interface/Ptr.h"
 
+//RPY 7-Dec-15
+/* #include "DataFormats/HepMCCandidate/interface/GenParticle.h" */
+
 namespace DataFormats_JetReco {
   struct dictionary3 {
     reco::TrackJetCollection o6;
@@ -125,6 +128,15 @@ namespace DataFormats_JetReco {
     edm::RefToBaseVector<reco::Jet> jrtbv;
     edm::Wrapper<edm::RefToBaseVector<reco::Jet> > jrtbv_w;
     edm::reftobase::BaseVectorHolder<reco::Jet> * bvhj_p;    // pointer since it's pure virtual
+
+
+    //RPY 7-Dec-15
+    /* edm::reftobase::BaseVectorHolder<reco::GenParticle> *bvh; */
+    /* edm::reftobase::IndirectVectorHolder<reco::GenParticle> ivh; */
+    /* edm::RefToBaseVector<reco::GenParticle> rtbv; */
+    /* edm::Wrapper<edm::RefToBaseVector<reco::GenParticle> > wrtbv; */
+    edm::Wrapper<edm::ValueMap<reco::PFJetRef> > wr_vm_r_pfjr;
+    edm::ValueMap<reco::PFJetRef> vm_r_pfjr;
   };
 }
 #endif

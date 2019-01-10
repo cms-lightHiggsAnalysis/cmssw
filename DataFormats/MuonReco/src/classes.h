@@ -1,6 +1,5 @@
 #include "DataFormats/Common/interface/Wrapper.h"
 #include "DataFormats/Common/interface/ValueMap.h"
-#include "DataFormats/Common/interface/Association.h"
 #include "DataFormats/MuonReco/interface/Muon.h"
 #include "DataFormats/MuonReco/interface/CaloMuon.h"
 #include "Rtypes.h" 
@@ -25,12 +24,15 @@
 #include "DataFormats/TrackReco/interface/Track.h" 
 #include "DataFormats/Common/interface/AssociationMap.h"
 #include "DataFormats/MuonReco/interface/DYTInfo.h"
-#include <DataFormats/MuonReco/interface/EmulatedME0Segment.h>
-#include <DataFormats/MuonReco/interface/ME0Muon.h>
 
+<<<<<<< HEAD
 #include <DataFormats/MuonReco/interface/EmulatedME0SegmentCollection.h>
 #include <DataFormats/MuonReco/interface/ME0MuonCollection.h>
 #include "DataFormats/MuonReco/interface/MuonSimInfo.h"
+=======
+//RPY 28-Aug-12
+#include "DataFormats/Common/interface/IndirectVectorHolder.h"
+>>>>>>> migrate official-cmssw file modifications in https://github.com/MengyaoShi/lightHiggsAnalysis/blob/master/README.md
 
 #include <vector>
 #include <map>
@@ -116,7 +118,6 @@ namespace DataFormats_MuonReco {
     edm::ValueMap<reco::MuonRef>::const_iterator rmref_vmci;
     edm::Wrapper<edm::ValueMap<reco::MuonRef> > rmref_wvm;
 
-    edm::Wrapper<edm::Association<reco::MuonCollection> > wrap_ass_mc;
 
     //shower block
     reco::MuonShower rms;
@@ -144,7 +145,6 @@ namespace DataFormats_MuonReco {
 
     edm::PtrVector<reco::Muon>                   pv_muon;
     edm::Wrapper<edm::PtrVector<reco::Muon> >    w_pv_muon;
-
     //ME0 block
     EmulatedME0Segment seg;
     std::vector<EmulatedME0Segment> segs;
@@ -167,6 +167,12 @@ namespace DataFormats_MuonReco {
     edm::Wrapper<std::vector<reco::MuonSimInfo> > wvMSI;
     edm::ValueMap<reco::MuonSimInfo> vmMSI;
     edm::Wrapper<edm::ValueMap<reco::MuonSimInfo> > wvmMSI;
+    //RPY 7-Dec-15
+    edm::reftobase::IndirectVectorHolder<reco::Muon> ivh_muon;
+    edm::ValueMap<reco::MuonRefVector> rmrefv_vm;
+    edm::ValueMap<reco::MuonRefVector>::const_iterator rmrefv_vmci;
+    edm::Wrapper<edm::ValueMap<reco::MuonRefVector> > rmrefv_wvm;
+    std::vector<reco::MuonRefVector> rmrefv_v;
   };
 }
 

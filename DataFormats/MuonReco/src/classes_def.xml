@@ -113,9 +113,6 @@ initial version number of a class which has never been stored before.
   </class>
   <class name="edm::Wrapper<edm::ValueMap<reco::MuonMETCorrectionData> >"/>
 
-  <class name="edm::Association<reco::MuonCollection>" />
-  <class name="edm::Wrapper<edm::Association<reco::MuonCollection>>" />
-
   <class name="reco::MuonQuality" ClassVersion="10">
    <version ClassVersion="10" checksum="3056161366"/>
   </class>
@@ -192,7 +189,6 @@ initial version number of a class which has never been stored before.
   <class name="edm::Wrapper<edm::Ptr<reco::Muon> >" />
   <class name="edm::PtrVector<reco::Muon>" />
   <class name="edm::Wrapper<edm::PtrVector<reco::Muon> >" />
-
   <selection>
     <class name="std::vector<EmulatedME0Segment>"/>
     <class name="EmulatedME0Segment" ClassVersion="2">
@@ -218,7 +214,15 @@ initial version number of a class which has never been stored before.
   <class name="edm::Wrapper<std::vector<reco::MuonSimInfo> >"/>
   <class name="edm::ValueMap<reco::MuonSimInfo>"/>
   <class name="edm::Wrapper<edm::ValueMap<reco::MuonSimInfo> >"/>
-
-
+  <!--RPY 7-Dec-15-->
+  <class name="edm::reftobase::IndirectVectorHolder<reco::Muon>" />
+  <class name="edm::ValueMap<reco::MuonRefVector>"/>
+  <class name="edm::ValueMap<reco::MuonRefVector>::const_iterator">
+    <field name="values_" transient="true"/>
+    <field name="i_" transient="true"/>
+    <field name="end_" transient="true"/>
+  </class>
+  <class name="edm::Wrapper<edm::ValueMap<reco::MuonRefVector> >"/>
+  <class name="std::vector<reco::MuonRefVector>"/>
 </lcgdict>
 
