@@ -324,4 +324,7 @@ isolationTauChargedHadronCandidates_.reset();
   <class name="reco::CaloTauDiscriminatorRefVector"/>
   <class name="edm::Wrapper<reco::CaloTauDiscriminator>"/>
 
+  <class name="edm::ValueMap<reco::PFTauRef>"/>
+  <class name="edm::Wrapper<edm::ValueMap<reco::PFTauRef> >"/>
+  
 </lcgdict>
