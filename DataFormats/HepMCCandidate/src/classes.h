@@ -45,6 +45,14 @@ namespace DataFormats_HepMCCandidate {
     edm::FwdPtr<reco::GenParticle> gpfp;
     std::vector<edm::FwdPtr<reco::GenParticle>> vgpfp;
     edm::Wrapper<std::vector<edm::FwdPtr<reco::GenParticle>>> wvgpfp;    
+
+
+    //RPY 28-Aug-12
+    //edm::reftobase::BaseVectorHolder<reco::GenParticle> *bvh;
+    //edm::reftobase::IndirectVectorHolder<reco::GenParticle> ivh;
+    //edm::RefToBaseVector<reco::GenParticle> rtbv;
+    //edm::Wrapper<edm::RefToBaseVector<reco::GenParticle> > wrtbv;
+
   };
 }
 

@@ -97,6 +97,9 @@ namespace DataFormats_TauReco {
     reco::CaloTauDiscriminatorRefProd                calodi_rp;
     reco::CaloTauDiscriminatorRefVector              calodi_rv;
     edm::Wrapper<reco::CaloTauDiscriminator>         calodi_w;
+
+    edm::Wrapper<edm::ValueMap<reco::PFTauRef> > wr_vm_r_pftr;
+    edm::ValueMap<reco::PFTauRef> vm_r_pftr;
   };
 }
 
