@@ -55,6 +55,7 @@ Creates a collection of electrons passing the Loose Electron ID.returns true if 
 #include "DataFormats/VertexReco/interface/Vertex.h"
 #include "DataFormats/VertexReco/interface/VertexFwd.h"
 
+#include "DataFormats/Common/interface/RefToBaseVector.h"
 
 using namespace edm;
 using namespace std;
@@ -104,8 +105,8 @@ private:
   int EBcount= 0;
   int EEcount= 0;
   int Tcount= 0;
-  unsigned int EBpcount = 0;
-  unsigned int EEpcount = 0;
+  unsigned int EBpcount_c = 0;
+  unsigned int EEpcount_c = 0;
   unsigned int Passcount= 0;  
   math::XYZPointF p1;
   math::XYZPoint p2;
@@ -142,8 +143,8 @@ ElectronFilter::ElectronFilter(const edm::ParameterSet& iConfig):
   trk_(consumes<reco::GsfTrack>(iConfig.getParameter<edm::InputTag>("Tracks")))
 {
   //now do what ever initialization is needed
-  produces<reco::GsfElectronCollection>( "LooseElectron" );
-  
+  //produces<reco::GsfElectronCollection>( "LooseElectron" );
+  produces<reco::GsfElectronRefVector>("LooseElectronRef");
 }
 
 
@@ -243,7 +244,9 @@ double ElectronFilter::GsfEleConversionVetoCut(reco::GsfElectronCollection::cons
 bool ElectronFilter::filter(edm::Event& iEvent, const edm::EventSetup& iSetup)
 {
   using namespace reco;
-  /*#ifdef THIS_IS_AN_EVENT_EXAMPLE
+   unsigned int EBpcount = 0;
+   unsigned int EEpcount = 0;
+ /*#ifdef THIS_IS_AN_EVENT_EXAMPLE
   Handle<ExampleData> pIn;
   iEvent.getByLabel("example",pIn);
 #endif
@@ -254,7 +257,8 @@ iSetup.get<SetupRecord>().get(pSetup);
 #endif*/
   Handle<reco::GsfElectronCollection> electrons;
   iEvent.getByToken(electronSrc_,electrons);
-  unique_ptr<reco::GsfElectronCollection> passedelectrons(new reco::GsfElectronCollection);
+  //unique_ptr<reco::GsfElectronCollection> passedelectrons(new reco::GsfElectronCollection);
+  unique_ptr<reco::GsfElectronRefVector> passedelectronRef(new reco::GsfElectronRefVector);
   Handle<reco::VertexCollection> Vertex;
   iEvent.getByToken(vtx_,Vertex);
   Handle<reco::GsfTrack> trk;
@@ -262,7 +266,8 @@ iSetup.get<SetupRecord>().get(pSetup);
   
   for(reco::GsfElectronCollection::const_iterator iele = electrons->begin() ; iele !=electrons->end(); ++iele)
     { ++Tcount;
-      
+      reco::GsfElectronRef ERef(electrons,iele-electrons->begin()); 
+
       dEtaInSeedCut =abs(dEtaInSeed(iele));
       GsfEleEInverseMinusPInverseCut = GsfEleEInverseMinusPInverse(iele);
       p1 = iele->trackPositionAtVtx();
@@ -285,10 +290,11 @@ iSetup.get<SetupRecord>().get(pSetup);
 	  
 	if( (iele->full5x5_sigmaIetaIeta()<0.011)  && (iele->hadronicOverEm()<0.289) && (abs(iele->deltaPhiSuperClusterTrackAtVtx()) <0.222) && (GsfEleEInverseMinusPInverseCut < 0.241) && (dEtaInSeedCut < 0.00477) && (GsfEleMissingHitsCut(iele) <= 1 ) && (GsfEleConversionVetoCut(iele,iEvent)) && (iele->pt()>7))
 	    {
-	      passedelectrons->push_back(*iele);
-	      
+	      //passedelectrons->push_back(*iele);
+	      passedelectronRef->push_back(ERef);
 	      cout<< "EBPushback" <<endl;
 	      ++EBpcount;
+	      ++EBpcount_c;
 	    }
 	  
 	}
@@ -301,9 +307,11 @@ iSetup.get<SetupRecord>().get(pSetup);
 	    {
 
 
-	      passedelectrons->push_back(*iele);
+	      //passedelectrons->push_back(*iele);
+	      passedelectronRef->push_back(ERef);
 	      cout<< "EEPushback" <<endl;
 	      ++EEpcount;
+	      ++EEpcount_c;
 	    }
 
 	}
@@ -312,8 +320,10 @@ iSetup.get<SetupRecord>().get(pSetup);
     }
 
 
-  iEvent.put(move(passedelectrons), "LooseElectron");
-  cout<<"total "<< Tcount << " EBele " << EBcount << " EEele " << EEcount <<endl;
+  //iEvent.put(move(passedelectrons), "LooseElectron");
+  iEvent.put(move(passedelectronRef),"LooseElectronRef");
+  // cout<< " EB " << EBpcount << " EE " << EEpcount <<endl;
+  cout<< "Cumulative total:"<<EBpcount_c+EEpcount_c<< " EEele " << EBpcount_c << " EBele " << EEpcount_c<<endl;
   if(Passcount < EBpcount + EEpcount)
         return true;
   else return false;
