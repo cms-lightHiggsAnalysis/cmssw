@@ -13,6 +13,6 @@ recoElectronsForJetCleaning = cms.EDFilter('ElectronFilter',
 ak4PFJetsElectronCleaned = cms.EDProducer(
     'ElectronCleanedJetProducer',
     jetSrc = cms.InputTag("ak4PFJets"),
-    electronSrc = cms.InputTag("recoElectronsForJetCleaning"),
+    electronSrc = cms.InputTag("recoElectronsForJetCleaning","LooseElectronRef"),
     pfCandSrc = cms.InputTag("particleFlow"),
     )

@@ -66,12 +66,15 @@ class ElectronCleanedJetProducer : public edm::stream::EDProducer<>
   // source of electrons that, if found within jet, should be removed
   //edm::EDGetTokenT<reco::MuonCollection> muonSrc_;
   edm::EDGetTokenT<reco::GsfElectronRefVector> electronSrc_;
-  
+  //edm::EDGetTokenT<edm::RefVector<reco::GsfElectronCollection> > electronSrc_;
   // source of PF candidates
   edm::EDGetTokenT<reco::PFCandidateCollection> pfCandSrc_;
   
   edm::ParameterSet* cfg_;
-  
+
+  int E_count=0;
+  int PF_count=0;
+  int Rem_count=0;
 };
 
 //
@@ -90,6 +93,7 @@ ElectronCleanedJetProducer::ElectronCleanedJetProducer(const edm::ParameterSet& 
   jetSrc_(consumes<reco::PFJetCollection>(iConfig.getParameter<edm::InputTag>("jetSrc"))),
   //muonSrc_(consumes<reco::MuonCollection>(iConfig.getParameter<edm::InputTag>("muonSrc"))),
   electronSrc_(consumes<reco::GsfElectronRefVector>(iConfig.getParameter<edm::InputTag>("electronSrc"))),
+  //electronSrc_(consumes<edm::RefVector<reco::GsfElectronCollection> >(iConfig.getParameter<edm::InputTag>("electronSrc"))),
   pfCandSrc_(consumes<reco::PFCandidateCollection>(iConfig.getParameter<edm::InputTag>("pfCandSrc")))
 {
   cfg_ = const_cast<edm::ParameterSet*>(&iConfig);
@@ -127,7 +131,8 @@ ElectronCleanedJetProducer::produce(edm::Event& iEvent, const edm::EventSetup& i
   
   //edm::Handle<reco::MuonCollection> muons;
   edm::Handle<reco::GsfElectronRefVector> electrons;
-    iEvent.getByToken(electronSrc_, electrons);
+  //edm::Handle<edm::RefVector<reco::GsfElectronCollection> > electrons;
+  iEvent.getByToken(electronSrc_, electrons);
   
   edm::Handle<reco::PFCandidateCollection> pfCands;
   iEvent.getByToken(pfCandSrc_, pfCands);
@@ -135,13 +140,16 @@ ElectronCleanedJetProducer::produce(edm::Event& iEvent, const edm::EventSetup& i
   
   //fill an STL container with muon ref keys
   std::vector<unsigned int> electronRefKeys;
-  if (electrons.isValid()) 
-    {
+  //if (electrons.isValid()) 
+  //{
       for (reco::GsfElectronRefVector::const_iterator iElectron = electrons->begin(); iElectron != electrons->end(); ++iElectron)
 	{
+	  //std::cout << " Electron Loop " << std::endl;
 	  electronRefKeys.push_back(iElectron->key());
+	  std::cout << "Electron in Loose Collection: " << iElectron->key() <<  " " << (*iElectron)->pt() <<  " "  << (*iElectron)->eta() <<  " "  << (*iElectron)->phi() <<std::endl;
+	  ++E_count;
 	}
-    }
+      //}
   
   //vector of bools holding the signal electron tag decision for each jet
   std::vector<bool> electronTagDecisions;
@@ -153,7 +161,7 @@ ElectronCleanedJetProducer::produce(edm::Event& iEvent, const edm::EventSetup& i
   //std::vector<reco::PFJetRef> oldJets;
   
   // Do cleaning
-  for (reco::PFJetCollection::const_iterator iJet = pfJets->begin(); iJet != pfJets->end(); ++iJet)
+for (reco::PFJetCollection::const_iterator iJet = pfJets->begin(); iJet != pfJets->end(); ++iJet)
     {
       std::vector<reco::PFCandidatePtr> jetPFCands = iJet->getPFConstituents();
       reco::PFJet::Specific specs = iJet->getSpecific();
@@ -174,8 +182,9 @@ ElectronCleanedJetProducer::produce(edm::Event& iEvent, const edm::EventSetup& i
 	// Is the PF Candidate a muon?
 	if (pfCand.particleId() == 2) //Reference: https://cmssdt.cern.ch/SDT/doxygen/CMSSW_7_1_17/doc/html/d8/d17/PFCandidate_8h_source.html
 	  {
-	    //std::cout << "Found a muon to check: "<< pfCand.muonRef().key() << " " << pfCand.pt() << " " << pfCand.eta() << " " << pfCand.phi() << std::endl;
-        //std::cout << "Muons in event:" << std::endl;
+	    std::cout << "Found a electron to check: "<< pfCand.gsfElectronRef().key() << " " << pfCand.pt() << " " << pfCand.eta() << " " << pfCand.phi() << std::endl;
+	    ++PF_count;
+	    //std::cout << "PF-Electrons in event:" << std::endl;
         //for (reco::MuonRefVector::const_iterator iMuon = muons->begin(); iMuon != muons->end(); ++iMuon)
         //{
         //  //std::cout << " "<< "" << " " << iMuon->pt() << " " << iMuon->eta() << " " << iMuon->phi() << std::endl;
@@ -203,14 +212,15 @@ ElectronCleanedJetProducer::produce(edm::Event& iEvent, const edm::EventSetup& i
 	    // muons of the soft muon
 	    //removedMuons.push_back(muons->at(iMuon - muonRefKeys.begin())->masterRef());
 	    
-          //std::cout << "Found a muon to remove: "<< pfCand.muonRef().key() << " " << pfCand.pt() << " " << pfCand.eta() << " " << pfCand.phi() << std::endl;
+          std::cout << "Found an Electron to remove: "<< pfCand.gsfElectronRef().key() << " " << pfCand.pt() << " " << pfCand.eta() << " " << pfCand.phi() << std::endl;
+	  ++Rem_count;
 	  }
         else
         {
           pfmomentum += pfCand.p4(); // total p4()
           jetConstituents.push_back((*i));
         }
-	  }
+	  }//If its an electron->loop
 	else // if it's not a muon
 	  {
         pfmomentum += pfCand.p4(); // total p4()
@@ -264,7 +274,7 @@ ElectronCleanedJetProducer::produce(edm::Event& iEvent, const edm::EventSetup& i
   filler.insert(cleanedJetsRefProd, electronTagDecisions.begin(), electronTagDecisions.end());
   filler.fill();
   iEvent.put(std::move(valMap), "jetCleanedValueMap" );
-  
+  std::cout<< " Electrons in Loose Collection: " <<  E_count  << " Electrons found among the PFCands in Jet:  " <<  PF_count  << " Electrons removed : " << Rem_count <<std::endl;  
   //fill the value map of removed muon refs for each cleaned jet
   //std::unique_ptr<edm::ValueMap<reco::MuonRefVector> > muonValMap(new edm::ValueMap<reco::MuonRefVector>());
   //edm::ValueMap<reco::MuonRefVector>::Filler muonFiller(*muonValMap);
