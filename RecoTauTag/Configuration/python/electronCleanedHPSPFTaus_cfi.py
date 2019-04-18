@@ -1,6 +1,16 @@
 import FWCore.ParameterSet.Config as cms
 import PhysicsTools.PatAlgos.tools.helpers as configtools
 
+def lowerTauPt(process,postfix='',tauPt=8, jetPt=5):
+    #from FWCore.ParameterSet.MassReplace import massSearchReplaceParam ->This line will work when we move to combination, but for the CMSSW version CMSSW_8_0_30, the desired function is located  in PhysicsTools/PatAlgos/python/tools/helpers.py
+    from PhysicsTools.PatAlgos.tools.helpers import massSearchReplaceParam
+    massSearchReplaceParam(getattr(process,'PATTauSequence'+postfix),'minJetPt',14,jetPt)
+    getattr(process,'selectedPatTaus'+postfix).cut = cms.string("pt > {} && tauID(\'decayModeFindingNewDMs\')> 0.5".format(tauPt))
+    
+
+
+
+
 def addElectronCleanedTaus(process):
     from PhysicsTools.PatAlgos.tools.helpers import cloneProcessingSnippet
     from PhysicsTools.PatAlgos.tools.helpers import massSearchReplaceAnyInputTag
@@ -22,7 +32,7 @@ def addElectronCleanedTaus(process):
     process.hpsPFTauChargedIsoPtSumElectronCleaned.particleFlowSrc = cms.InputTag(jetSrc,'particleFlowElectronCleaned')
     massSearchReplaceAnyInputTag(process.PATTauSequenceElectronCleaned,cms.InputTag('ak4PFJets'),cms.InputTag(jetSrc))  
     process.slimmedTausElectronCleaned = process.slimmedTaus.clone(src = cms.InputTag('selectedPatTausElectronCleaned'))
-    
+    lowerTauPt(process,'ElectronCleaned')
     #patAlgosToolsTask.add(process.slimmedTausElectronCleaned)
     
     return process
