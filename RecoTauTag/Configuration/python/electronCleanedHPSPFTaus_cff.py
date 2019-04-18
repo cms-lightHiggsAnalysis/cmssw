@@ -2,7 +2,7 @@ import FWCore.ParameterSet.Config as cms
 
 '''
 
-Sequences for reconstructing muon cleaned taus using the HPS algorithm
+Sequences for reconstructing electron cleaned taus using the HPS algorithm
 
 '''
 
