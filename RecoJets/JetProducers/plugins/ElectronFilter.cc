@@ -288,7 +288,7 @@ iSetup.get<SetupRecord>().get(pSetup);
       if( iele->isEB())	{++EBcount;
 	  //cout << "EBloop" <<endl;
 	  
-	if( (iele->full5x5_sigmaIetaIeta()<0.011)  && (iele->hadronicOverEm()<0.289) && (abs(iele->deltaPhiSuperClusterTrackAtVtx()) <0.222) && (GsfEleEInverseMinusPInverseCut < 0.241) && (dEtaInSeedCut < 0.00477) && (GsfEleMissingHitsCut(iele) <= 1 ) && (GsfEleConversionVetoCut(iele,iEvent)) && (iele->pt()>7))
+	if( (iele->full5x5_sigmaIetaIeta()<0.011)  && (iele->hadronicOverEm()<0.298) && (abs(iele->deltaPhiSuperClusterTrackAtVtx()) <0.222) && (GsfEleEInverseMinusPInverseCut < 0.241) && (dEtaInSeedCut < 0.00477) && (GsfEleMissingHitsCut(iele) <= 1 ) && (GsfEleConversionVetoCut(iele,iEvent)) && (iele->pt()>7))
 	    {
 	      //passedelectrons->push_back(*iele);
 	      passedelectronRef->push_back(ERef);
@@ -302,7 +302,7 @@ iSetup.get<SetupRecord>().get(pSetup);
 	
 	{++EEcount;
 	  //cout<<" EEloop " << endl;
-	  if((iele->full5x5_sigmaIetaIeta()<0.03) && (iele->hadronicOverEm()<0.101) && (abs(iele->deltaPhiSuperClusterTrackAtVtx()) <0.213) && (GsfEleEInverseMinusPInverseCut < 0.14) &&(dEtaInSeedCut <0.00868) && (GsfEleMissingHitsCut(iele) <= 1 ) && (GsfEleConversionVetoCut(iele,iEvent)) && (iele->pt()>7) )
+	  if((iele->full5x5_sigmaIetaIeta()<0.0314) && (iele->hadronicOverEm()<0.101) && (abs(iele->deltaPhiSuperClusterTrackAtVtx()) <0.213) && (GsfEleEInverseMinusPInverseCut < 0.14) &&(dEtaInSeedCut <0.00868) && (GsfEleMissingHitsCut(iele) <= 1 ) && (GsfEleConversionVetoCut(iele,iEvent)) && (iele->pt()>7) )
 
 	    {
 
