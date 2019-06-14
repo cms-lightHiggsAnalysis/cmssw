@@ -223,7 +223,7 @@ double ElectronLooseProducer::GsfEleMissingHitsCut(reco::GsfElectronCollection::
   constexpr reco::HitPattern::HitCategory missingHitType =
     reco::HitPattern::MISSING_INNER_HITS;
     const unsigned mHits = 
-    ele->gsfTrack()->hitPattern().numberOfHits(missingHitType);
+    ele->gsfTrack()->hitPattern().numberOfAllHits(missingHitType);
   return mHits;
 }
 ///
