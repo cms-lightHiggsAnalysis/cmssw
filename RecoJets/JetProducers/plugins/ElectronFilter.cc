@@ -176,7 +176,7 @@ double ElectronFilter::GsfEleMissingHitsCut(reco::GsfElectronCollection::const_i
   constexpr reco::HitPattern::HitCategory missingHitType =
     reco::HitPattern::MISSING_INNER_HITS;
     const unsigned mHits =
-      ele->gsfTrack()->hitPattern().numberOfHits(missingHitType);
+      ele->gsfTrack()->hitPattern().numberOfAllHits(missingHitType);
     return mHits;
 }
 double ElectronFilter::GsfEleEffAreaPFIsoCut(reco::GsfElectronCollection::const_iterator ele,edm::Event& iEvent)

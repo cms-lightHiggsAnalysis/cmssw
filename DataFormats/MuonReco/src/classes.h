@@ -24,15 +24,13 @@
 #include "DataFormats/TrackReco/interface/Track.h" 
 #include "DataFormats/Common/interface/AssociationMap.h"
 #include "DataFormats/MuonReco/interface/DYTInfo.h"
-
-<<<<<<< HEAD
 #include <DataFormats/MuonReco/interface/EmulatedME0SegmentCollection.h>
 #include <DataFormats/MuonReco/interface/ME0MuonCollection.h>
 #include "DataFormats/MuonReco/interface/MuonSimInfo.h"
-=======
+
 //RPY 28-Aug-12
 #include "DataFormats/Common/interface/IndirectVectorHolder.h"
->>>>>>> migrate official-cmssw file modifications in https://github.com/MengyaoShi/lightHiggsAnalysis/blob/master/README.md
+
 
 #include <vector>
 #include <map>
